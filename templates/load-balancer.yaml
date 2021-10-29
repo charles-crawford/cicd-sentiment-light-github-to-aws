@@ -60,7 +60,7 @@ Resources:
     DependsOn: LoadBalancer
     Properties:
       VpcId: !Ref VpcId
-      Port: !If [ Fargate, !Ref ContainerPort, !Ref HostPort ]
+      Port: !If [ EC2, !Ref HostPort, !Ref ContainerPort ]
       Protocol: HTTP
       Matcher:
         HttpCode: 200-299

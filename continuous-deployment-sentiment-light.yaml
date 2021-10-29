@@ -69,6 +69,11 @@ Parameters:
     Default: 1
     Description: The number of instantiations of the specified task definition
 
+  InstanceType:
+    Type: String
+    Default: t2.medium
+    Description: The instance type must be large enough in memory and cpu to handle your container specs
+
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterLabels:
@@ -90,11 +95,14 @@ Metadata:
         default: "HostPort"
       DesiredCount:
         default: "DesiredCount"
+      InstanceType:
+        default: "InstanceType"
     ParameterGroups:
       - Label:
           default: Cluster Configuration
         Parameters:
           - LaunchType
+          - InstanceType
       - Label:
           default: Service Configuration
         Parameters:
@@ -127,6 +135,7 @@ Resources:
         SourceSecurityGroup: !GetAtt LoadBalancer.Outputs.SecurityGroup
         Subnets: !GetAtt VPC.Outputs.Subnets
         VpcId: !GetAtt VPC.Outputs.VpcId
+        InstanceType: !Ref InstanceType
 
   DeploymentPipeline:
     Type: AWS::CloudFormation::Stack

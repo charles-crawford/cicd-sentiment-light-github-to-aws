@@ -12,7 +12,6 @@ Parameters:
 
   InstanceType:
     Type: String
-    Default: t2.micro
 
   ClusterSize:
     Type: Number

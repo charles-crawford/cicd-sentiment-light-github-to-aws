@@ -13,6 +13,13 @@ The CloudFormation templates are based on this
 ### First Things First
 In [Github](https://github.com), make sure to 
 [create a personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+You'll need this when creating the Stack.
+
+There is also a dependency in the DeploymentPipeline on the Service. 
+This means that the DeploymentPipeline waits on the Service to be built, but the Task in the Service is looking 
+for the image. So, the Stack just hangs up in creating the Service. So it is necessary, to create an ECR Repository and 
+[push Docker image of the repo to ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html).
+Doing this initially will keep your Stack from hanging when creating the Service.
 
 ### Modifications to the AWS Example Templates
 ##### Parameter Values
