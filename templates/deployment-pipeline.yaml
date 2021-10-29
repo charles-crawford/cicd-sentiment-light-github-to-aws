@@ -155,7 +155,7 @@ Resources:
           - Name: IMAGE_REPO_NAME
             Value: !Ref GitHubRepo
       Name: !Ref AWS::StackName
-      ServiceRole: !Ref CodeBuildServiceRoleResource
+      ServiceRole: !Ref CodeBuildServiceRole
 
   Pipeline:
     Type: AWS::CodePipeline::Pipeline

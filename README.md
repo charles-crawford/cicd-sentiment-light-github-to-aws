@@ -1,5 +1,4 @@
 Deploy sentiment-light from Github to AWS ECS
-CAVEAT: Not working yet
 ---
 This repo demonstrates how to take the sentiment-light app located in my repo and push it to AWS
 The CloudFormation templates are based on this 

@@ -148,6 +148,7 @@ Resources:
         GitHubToken: !Ref GitHubToken
         GitHubRepo: !Ref GitHubRepo
         GitHubBranch: !Ref GitHubBranch
+        ImageTag: !Ref ImageTag
 
   LoadBalancer:
     Type: AWS::CloudFormation::Stack
