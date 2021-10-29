@@ -61,7 +61,7 @@ Parameters:
 
   HostPort:
     Type: Number
-    Default: 5001
+    Default: 5000
     Description: The port number that your service will map to on the host if LaunchType is EC2
 
   DesiredCount:

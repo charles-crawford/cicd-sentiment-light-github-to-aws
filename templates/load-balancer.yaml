@@ -34,8 +34,8 @@ Resources:
       SecurityGroupIngress:
         - CidrIp: "0.0.0.0/0"
           IpProtocol: "TCP"
-          FromPort: 80
-          ToPort: 80
+          FromPort: !If [ EC2, !Ref HostPort, !Ref ContainerPort ]
+          ToPort: !If [ EC2, !Ref HostPort, !Ref ContainerPort ]
       VpcId: !Ref VpcId
 
   LoadBalancer:
@@ -49,7 +49,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       LoadBalancerArn: !Ref LoadBalancer
-      Port: 80
+      Port: !If [ EC2, !Ref HostPort, !Ref ContainerPort ]
       Protocol: HTTP
       DefaultActions:
         - Type: forward
