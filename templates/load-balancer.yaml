@@ -16,6 +16,11 @@ Parameters:
   VpcId:
     Type: String
 
+  ContainerPort:
+    Type: Number
+
+  HostPort:
+    Type: Number
 
 Conditions:
   EC2: !Equals [ !Ref LaunchType, "EC2" ]
@@ -55,7 +60,7 @@ Resources:
     DependsOn: LoadBalancer
     Properties:
       VpcId: !Ref VpcId
-      Port: 80
+      Port: !If [ Fargate, !Ref ContainerPort, !Ref HostPort ]
       Protocol: HTTP
       Matcher:
         HttpCode: 200-299

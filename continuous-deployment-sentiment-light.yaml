@@ -148,6 +148,8 @@ Resources:
         LaunchType: !Ref LaunchType
         Subnets: !GetAtt VPC.Outputs.Subnets
         VpcId: !GetAtt VPC.Outputs.VpcId
+        HostPort: !Ref HostPort
+        ContainerPort: !Ref ContainerPort
 
   VPC:
     Type: AWS::CloudFormation::Stack

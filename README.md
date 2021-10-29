@@ -1,4 +1,5 @@
 Deploy sentiment-light from Github to AWS ECS
+CAVEAT: Not working yet
 ---
 This repo demonstrates how to take the sentiment-light app located in my repo and push it to AWS
 The CloudFormation templates are based on this 
@@ -15,7 +16,7 @@ In [Github](https://github.com), make sure to
 
 ### Modifications to the AWS Example Templates
 ##### Parameter Values
-The added a few Parameters to the parent template to feed into the child templates:
+I added a few Parameters to the parent template to feed into the child templates:
 ImageTag, ContainerPort, DesiredCount, and HostPort. Make sure to declare any Parameters you add to the 
 corresponding Resource's Parameter block. Also, declare them in the Parameters section of the 
 child template. You need to do both these things so the values make it through the Stack build. 
