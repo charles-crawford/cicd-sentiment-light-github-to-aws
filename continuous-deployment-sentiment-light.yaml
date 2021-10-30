@@ -71,8 +71,13 @@ Parameters:
 
   InstanceType:
     Type: String
-    Default: t2.medium
+    Default: t2.large
     Description: The instance type must be large enough in memory and cpu to handle your container specs
+
+  HealthCheckPath:
+    Type: String
+    Default: heathcheck
+    Description: The endpoint for you service heathcheck
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -97,6 +102,9 @@ Metadata:
         default: "DesiredCount"
       InstanceType:
         default: "InstanceType"
+      HealthCheckPath:
+        default: "HealthCheckPath"
+
     ParameterGroups:
       - Label:
           default: Cluster Configuration
@@ -124,6 +132,10 @@ Metadata:
           default: Image Repository Configuration
         Parameters:
           - ImageTag
+      - Label:
+          default: Load Balancer Configuration
+        Parameters:
+          - HealthCheckPath
 
 Resources:
   Cluster:
@@ -160,6 +172,7 @@ Resources:
         VpcId: !GetAtt VPC.Outputs.VpcId
         HostPort: !Ref HostPort
         ContainerPort: !Ref ContainerPort
+        HealthCheckPath: !Ref HealthCheckPath
 
   VPC:
     Type: AWS::CloudFormation::Stack
