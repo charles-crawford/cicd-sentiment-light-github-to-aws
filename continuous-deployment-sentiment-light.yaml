@@ -76,7 +76,7 @@ Parameters:
 
   HealthCheckPath:
     Type: String
-    Default: heathcheck
+    Default: /heathcheck
     Description: The endpoint for you service heathcheck
 
 Metadata:
