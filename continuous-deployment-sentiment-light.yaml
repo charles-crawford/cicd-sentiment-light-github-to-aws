@@ -76,8 +76,8 @@ Parameters:
 
   HealthCheckPath:
     Type: String
-    Default: /heathcheck
-    Description: The endpoint for you service heathcheck
+    Default: /healthcheck
+    Description: The endpoint for you service healthcheck
 
 Metadata:
   AWS::CloudFormation::Interface:
