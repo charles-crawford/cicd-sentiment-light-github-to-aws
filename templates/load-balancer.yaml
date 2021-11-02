@@ -25,6 +25,12 @@ Parameters:
   HealthCheckPath:
     Type: String
 
+  HealthCheckTimeoutSeconds:
+    Type: Number
+
+  HealthCheckIntervalSeconds:
+    Type: Number
+
 Conditions:
   EC2: !Equals [ !Ref LaunchType, "EC2" ]
 
@@ -67,10 +73,10 @@ Resources:
       Protocol: HTTP
       Matcher:
         HttpCode: 200-299
-      HealthCheckIntervalSeconds: 180
+      HealthCheckIntervalSeconds: !Ref HealthCheckIntervalSeconds
       HealthCheckPath: !Ref HealthCheckPath
       HealthCheckProtocol: HTTP
-      HealthCheckTimeoutSeconds: 120
+      HealthCheckTimeoutSeconds: !Ref HealthCheckTimeoutSeconds
       HealthyThresholdCount: 2
       TargetType: !If [ EC2, "instance", "ip" ]
       TargetGroupAttributes:

@@ -46,8 +46,7 @@ Parameters:
   TemplateBucket:
     Type: String
     Default: continuous-deployment-sentiment-light
-    Description: >
-      The S3 bucket from which to fetch the templates used by this stack.
+    Description: The S3 bucket from which to fetch the templates used by this stack.
 
   ImageTag:
     Type: String
@@ -62,7 +61,9 @@ Parameters:
   HostPort:
     Type: Number
     Default: 5000
-    Description: The port number that your service will map to on the host if LaunchType is EC2
+    Description: >
+      The port number that your service will map to on the host if LaunchType is EC2. This needs to be the same as
+      the ContainerPort for Fargate deployments
 
   DesiredCount:
     Type: Number
@@ -78,6 +79,16 @@ Parameters:
     Type: String
     Default: /healthcheck
     Description: The endpoint for you service healthcheck
+
+  HealthCheckTimeoutSeconds:
+    Type: Number
+    Default: 120
+    Description: The amount of time, in seconds, during which no response from a target means a failed health check.
+
+  HealthCheckIntervalSeconds:
+    Type: Number
+    Default: 180
+    Description: The approximate amount of time, in seconds, between health checks of an individual target.
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -104,6 +115,10 @@ Metadata:
         default: "InstanceType"
       HealthCheckPath:
         default: "HealthCheckPath"
+      HealthCheckTimeoutSeconds:
+        default: "HealthCheckTimeoutSeconds"
+      HealthCheckIntervalSeconds:
+        default: "HealthCheckIntervalSeconds"
 
     ParameterGroups:
       - Label:
@@ -136,6 +151,8 @@ Metadata:
           default: Load Balancer Configuration
         Parameters:
           - HealthCheckPath
+          - HealthCheckIntervalSeconds
+          - HealthCheckTimeoutSeconds
 
 Resources:
   Cluster:
@@ -173,6 +190,8 @@ Resources:
         HostPort: !Ref HostPort
         ContainerPort: !Ref ContainerPort
         HealthCheckPath: !Ref HealthCheckPath
+        HealthCheckIntervalSeconds: !Ref HealthCheckIntervalSeconds
+        HealthCheckTimeoutSeconds: !Ref HealthCheckTimeoutSeconds
 
   VPC:
     Type: AWS::CloudFormation::Stack
