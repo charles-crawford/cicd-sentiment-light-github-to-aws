@@ -59,6 +59,6 @@ deploying the Stacks. From the base directory run:
 
 `./bin/deploy continuous-deployment-sentiment-light`
 
-After those files have been delivered, go to CloudFormation console in your AWS account. Use the parent
-template, named 'continuous-deployment-sentiment-light.yaml' in this repo. Check your Parameter values
+After those files have been delivered to your bucket, go to CloudFormation console in your AWS account. Use the parent
+template, named `continuous-deployment-sentiment-light.yaml` in this repo to build the stacks. Check your Parameter values
 and proceed on to deploy the Stack. 
