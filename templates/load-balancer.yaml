@@ -77,7 +77,7 @@ Resources:
       HealthCheckPath: !Ref HealthCheckPath
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: !Ref HealthCheckTimeoutSeconds
-      HealthyThresholdCount: 2
+      HealthyThresholdCount: 5
       TargetType: !If [ EC2, "instance", "ip" ]
       TargetGroupAttributes:
         - Key: deregistration_delay.timeout_seconds

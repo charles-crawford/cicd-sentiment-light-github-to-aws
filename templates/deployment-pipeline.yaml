@@ -26,10 +26,6 @@ Parameters:
     Type: String
 
 Resources:
-  Repository:
-    Type: AWS::ECR::Repository
-    DeletionPolicy: Retain
-
   CodeBuildServiceRole:
     Type: AWS::IAM::Role
     Properties:
@@ -59,7 +55,7 @@ Resources:
                   - s3:GetObject
                   - s3:PutObject
                   - s3:GetObjectVersion
-              - Resource: !Sub arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/${Repository}
+              - Resource: !Sub arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/${GitHubRepo}
                 Effect: Allow
                 Action:
                   - ecr:GetDownloadUrlForLayer
@@ -126,6 +122,7 @@ Resources:
                 - echo Logging in to Amazon ECR...
                 - aws --version
                 - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+                - IMAGE_URI="${REPOSITORY_URI}:${IMAGE_TAG}"
             build:
               commands:
                 - echo Build started on $(date)
@@ -138,7 +135,9 @@ Resources:
                 - echo Pushing the Docker image...
                 - docker push $REPOSITORY_URI:$IMAGE_TAG
                 - echo Writing image definitions file...
-                - printf '[{"name":$IMAGE_REPO_NAME,"imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+                - printf '[{"name":"sentiment-light","imageUri":"%s"}]' "$IMAGE_URI" > imagedefinitions.json
+          artifacts:
+            files: imagedefinitions.json
       Environment:
         ComputeType: BUILD_GENERAL1_MEDIUM
         Image: aws/codebuild/standard:4.0
@@ -155,7 +154,7 @@ Resources:
             Value: !Ref ImageTag
           - Name: IMAGE_REPO_NAME
             Value: !Ref GitHubRepo
-      Name: !Ref AWS::StackName
+      Name: !Ref GitHubRepo
       ServiceRole: !Ref CodeBuildServiceRole
 
   Pipeline:
@@ -208,7 +207,7 @@ Resources:
               Configuration:
                 ClusterName: !Ref Cluster
                 ServiceName: !Ref Service
-                FileName: misc.json
+                FileName: imagedefinitions.json
               InputArtifacts:
                 - Name: BuildOutput
               RunOrder: 1
