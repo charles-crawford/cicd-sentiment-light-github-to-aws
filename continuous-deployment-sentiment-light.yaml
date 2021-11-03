@@ -60,8 +60,7 @@ Parameters:
     Type: Number
     Default: 5000
     Description: >
-      The port number that your service will map to on the host if LaunchType is EC2. This needs to be the same as
-      the ContainerPort for Fargate deployments
+      The port number that your service will map to on the host if LaunchType is EC2.
 
   DesiredCount:
     Type: Number
