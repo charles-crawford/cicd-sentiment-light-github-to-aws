@@ -9,6 +9,6 @@ aws s3api put-bucket-policy --bucket "$1" \
 
 aws s3api put-bucket-versioning --bucket "$1"  --versioning-configuration Status=Enabled
 
-aws s3 cp continuous-deployment-sentiment-light.yaml "s3://${1}"
+aws s3 cp "$1".yaml "s3://${1}"
 
 aws s3 cp --recursive templates/ "s3://${1}/templates"
