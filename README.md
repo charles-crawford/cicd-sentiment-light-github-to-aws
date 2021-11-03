@@ -63,3 +63,8 @@ deploying the Stacks. From the base directory run:
 After those files have been delivered to your bucket, go to CloudFormation console in your AWS account. Use the parent
 template, named `continuous-deployment-sentiment-light.yaml` in this repo to build the stacks. Check your Parameter values
 and proceed on to deploy the Stack. 
+
+### Clean up
+Clean up is easy. Just delete the parent stack, and it will delete all resources except the ArtifactBucket S3 
+bucket. Make sure to remove the contents and delete that manually. If you'd like to delete your template bucket,
+do that manually as well. 
