@@ -3,10 +3,8 @@ AWSTemplateFormatVersion: 2010-09-09
 
 
 Description: >
-  This template shows how to use AWS CodePipeline and AWS CodeBuild to build an
-  automated continuous deployment pipeline to Amazon Elastic Container Service
-  (Amazon ECS) using clusters powered by AWS Fargate or Amazon Elastic Compute
-  Cloud (Amazon EC2).
+  This repo demonstrates how to take the sentiment-light app located in my repo and push it to Fargate or EC2
+  ECS deployment. It also creates a CI/CD pipeline from GitHub for ease of future deployments.
 
 
 Parameters:

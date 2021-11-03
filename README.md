@@ -1,6 +1,6 @@
 Deploy sentiment-light from Github to AWS ECS
 ---
-This repo demonstrates how to take the sentiment-light app located in my repo and push it to a Farget or EC2 
+This repo demonstrates how to take the sentiment-light app located in my repo and push it to a Fargate or EC2 
 ECS deployment. The CloudFormation templates are based on this 
 [AWS Tutorial](https://github.com/awslabs/ecs-refarch-continuous-deployment). I've added Parameters to 
 make it easier to modify the repo to other apps. I've also added some details of the changes I had to make from 
@@ -66,5 +66,5 @@ and proceed on to deploy the Stack.
 
 ### Clean up
 Clean up is easy. Just delete the parent stack, and it will delete all resources except the ArtifactBucket S3 
-bucket. Make sure to remove the contents and delete that manually. If you'd like to delete your template bucket,
-do that manually as well. 
+bucket. Make sure to remove the contents and delete that manually. If you'd like to delete your template bucket, 
+it is made public in the `bin/deploy` script. So you might want to do that.
