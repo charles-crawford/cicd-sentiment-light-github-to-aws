@@ -64,6 +64,9 @@ After those files have been delivered to your bucket, go to CloudFormation conso
 template, named `continuous-deployment-sentiment-light.yaml` in this repo to build the stacks. Check your Parameter values
 and proceed on to deploy the Stack. 
 
+Once the service is up, the pipeline will build. When the pipeline is complete, make a change to your repo. The pipeline
+will pick up the change, build the new image, then deploy the updated application.  
+
 ### Clean up
 Clean up is easy. Just delete the parent stack, and it will delete all resources except the ArtifactBucket S3 
 bucket. Make sure to remove the contents and delete that manually. If you'd like to delete your template bucket, 
