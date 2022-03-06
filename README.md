@@ -6,6 +6,15 @@ ECS deployment. The CloudFormation templates are based on this
 make it easier to modify the repo to other apps. I've also added some details of the changes I had to make from 
 the tutorial repo above to get the app deployed. 
 
+### <span style="color:red">***WARNING***</span>
+<span style="color:red; font-weight: bold">
+This template is set up by default to deploy a p2.xlarge GPU instance for the service. The cost is 
+$0.90 per hour. So please be aware of cleaning up your stack once you are done.
+</span>
+
+<span style="color:red; font-weight: bold">*** Simply select the t2.large instance to launch using a CPU service.***</span>
+
+
 ### Sections
 1. First Things First
 2. Modifications to the AWS Example Templates

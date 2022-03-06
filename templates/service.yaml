@@ -39,7 +39,6 @@ Parameters:
 
 Conditions:
   Fargate: !Equals [ !Ref LaunchType, "Fargate" ]
-
   EC2: !Equals [ !Ref LaunchType, "EC2" ]
 
 Resources:

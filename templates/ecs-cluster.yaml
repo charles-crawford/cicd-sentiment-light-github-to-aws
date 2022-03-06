@@ -10,12 +10,23 @@ Parameters:
       - Fargate
       - EC2
 
+  AmiMapping:
+    Type: String
+    Default: AWSRegionToAMIGPU
+    AllowedValues:
+      - AWSRegionToAMIGPU
+      - AWSRegionToAMI
+
   InstanceType:
     Type: String
+    Default: p2.xlarge
+    AllowedValues:
+      - p2.xlarge
+      - t2.large
 
   ClusterSize:
     Type: Number
-    Default: 2
+    Default: 1
 
   Subnets:
     Type: List<AWS::EC2::Subnet::Id>
@@ -25,11 +36,6 @@ Parameters:
 
   VpcId:
     Type: AWS::EC2::VPC::Id
-
-
-Conditions:
-  EC2: !Equals [ !Ref LaunchType, "EC2" ]
-
 
 Mappings:
   AWSRegionToAMI:
@@ -64,6 +70,20 @@ Mappings:
     us-west-2:
       AMI: ami-decc7fa6
 
+  AWSRegionToAMIGPU:
+    us-east-1:
+      AMI: ami-01a16356ed2a310d1
+    us-east-2:
+      AMI: ami-0ba823678b2e6eed8
+    us-west-1:
+      AMI: ami-0a38b67bdcab94b42
+    us-west-2:
+      AMI: ami-04ac2541df4955fb1
+
+Conditions:
+  EC2: !Equals [ !Ref LaunchType, "EC2" ]
+  p2.xlarge: !Equals [ !Ref AmiMapping, "AWSRegionToAMIGPU" ]
+  t2.large: !Equals [ !Ref AmiMapping, "AWSRegionToAMI" ]
 
 Resources:
   ECSRole:
@@ -159,7 +179,7 @@ Resources:
                   - /etc/cfn/cfn-hup.conf
                   - /etc/cfn/hooks.d/cfn-auto-reloader.conf
     Properties:
-      ImageId: !FindInMap [ AWSRegionToAMI, !Ref "AWS::Region", AMI ]
+      ImageId: !FindInMap [ !Ref AmiMapping, !Ref "AWS::Region", AMI ]
       InstanceType: !Ref InstanceType
       IamInstanceProfile: !Ref InstanceProfile
       SecurityGroups:

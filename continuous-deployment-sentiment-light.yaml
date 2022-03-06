@@ -10,7 +10,7 @@ Description: >
 Parameters:
   LaunchType:
     Type: String
-    Default: Fargate
+    Default: EC2
     AllowedValues:
       - Fargate
       - EC2
@@ -69,8 +69,13 @@ Parameters:
 
   InstanceType:
     Type: String
-    Default: t2.large
-    Description: The instance type must be large enough in memory and cpu to handle your container specs
+    Default: p2.xlarge
+    AllowedValues:
+      - p2.xlarge
+      - t2.large
+    Description: The instance type must be large enough in memory and cpu to handle your container specs. If p2.xlarge,
+      will use the AWSRegionToAMIGPU map to deploy the Deep Learning AMI GPU PyTorch 1.10.0 (Amazon Linux 2) 20211115
+      image for using a GPU for the service. Current mapping only supports the region us-east-2.
 
   HealthCheckPath:
     Type: String
