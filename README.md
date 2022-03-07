@@ -6,6 +6,8 @@ ECS deployment. The CloudFormation templates are based on this
 make it easier to modify the repo to other apps. I've also added some details of the changes I had to make from 
 the tutorial repo above to get the app deployed. 
 
+### Note: Currently working to include GPU deployment capabilities
+
 ### Sections
 1. First Things First
 2. Modifications to the AWS Example Templates
