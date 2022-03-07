@@ -82,8 +82,7 @@ Mappings:
 
 Conditions:
   EC2: !Equals [ !Ref LaunchType, "EC2" ]
-  p2.xlarge: !Equals [ !Ref AmiMapping, "AWSRegionToAMIGPU" ]
-  t2.large: !Equals [ !Ref AmiMapping, "AWSRegionToAMI" ]
+  GPU: !Equals [ !Ref InstanceType, "p2.xlarge" ]
 
 Resources:
   ECSRole:
@@ -179,7 +178,13 @@ Resources:
                   - /etc/cfn/cfn-hup.conf
                   - /etc/cfn/hooks.d/cfn-auto-reloader.conf
     Properties:
-      ImageId: !FindInMap [ !Ref AmiMapping, !Ref "AWS::Region", AMI ]
+#      ImageId: !FindInMap [ , !Ref "AWS::Region", AMI ]
+#      ImageId: !If [ , , !FindInMap [ AWSRegionToAMI, !Ref "AWS::Region", AMI ]]
+      ImageId: !If [ GPU, ami-0ba823678b2e6eed8, ami-ce1c36ab]
+#        'Fn::If':
+#          - GPU
+#          - ami-0ba823678b2e6eed8 #!FindInMap [ AWSRegionToAMIGPU, !Ref "AWS::Region", AMI ]
+#          - ami-ce1c36ab #!FindInMap [ AWSRegionToAMI, !Ref "AWS::Region", AMI ]
       InstanceType: !Ref InstanceType
       IamInstanceProfile: !Ref InstanceProfile
       SecurityGroups:
