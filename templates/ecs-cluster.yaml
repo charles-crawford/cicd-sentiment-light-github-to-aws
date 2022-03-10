@@ -26,7 +26,7 @@ Parameters:
 
   ClusterSize:
     Type: Number
-    Default: 1
+    Default: 2
 
   Subnets:
     Type: List<AWS::EC2::Subnet::Id>
@@ -72,13 +72,13 @@ Mappings:
 
   AWSRegionToAMIGPU:
     us-east-1:
-      AMI: ami-06eb1cfa00ef2a7ac
+      AMI: ami-09dde860d0fe25a39
     us-east-2:
-      AMI: ami-07f957ddff095e621
+      AMI: ami-08459ab86cac2b978
     us-west-1:
-      AMI: ami-0b2d79480f3fc1171
+      AMI: ami-00b332d1ef4bf421d
     us-west-2:
-      AMI: ami-0194c8572bde54585
+      AMI: ami-052237b2eee880dc6
 
 Conditions:
   EC2: !Equals [ !Ref LaunchType, "EC2" ]
@@ -128,9 +128,9 @@ Resources:
     Properties:
       VPCZoneIdentifier: !Ref Subnets
       LaunchConfigurationName: !Ref LaunchConfiguration
-      MinSize: !Ref ClusterSize
+      MinSize: 1
       MaxSize: !Ref ClusterSize
-      DesiredCapacity: !Ref ClusterSize
+      DesiredCapacity: 1
       Tags: 
         - Key: Name
           Value: !Sub ${AWS::StackName} - ECS Host
