@@ -107,35 +107,17 @@ Resources:
       Family: !Sub ${AWS::StackName}-${GitHubRepo}
       RequiresCompatibilities:
         - !If [ Fargate, "FARGATE", "EC2" ]
-      !If
-        - GPU
-        - Memory: 30720
-        - Memory: 2048
-      !If
-        - GPU
-        - Cpu: 4096
-        - Cpu: 256
+      Memory: 30720 #2048 #
+      Cpu: 4096 #256 #
       NetworkMode: !If [ Fargate, "awsvpc", "bridge" ]
       ExecutionRoleArn: !Ref TaskExecutionRole
       ContainerDefinitions:
         - Name: !Ref GitHubRepo
           Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${GitHubRepo}:${ImageTag}
           Essential: true
-          !If
-            - GPU
-            - Memory: 30720
-            - Memory: 2048
-          !If
-            - GPU
-            - Cpu: 4096
-            - Cpu: 256
-          !If
-            - GPU
-            - MemoryReservation: 30720
-            - MemoryReservation: 2048
-#          Cpu: !If [ GPU, 4096, 256 ]
-#          Memory: !If [ GPU, 30720, 2048 ]
-#          MemoryReservation: !If [ GPU, 30720, 2048 ]
+          Cpu: 4096 #256 #
+          Memory: 30720 #2048 #
+          MemoryReservation: 30720 #2048 #
           PortMappings:
             - ContainerPort: !Ref ContainerPort
               HostPort: !If [ Fargate, !Ref ContainerPort, !Ref HostPort ]
@@ -155,3 +137,24 @@ Resources:
 Outputs:
   Service:
     Value: !If [ Fargate, !Ref FargateService, !Ref EC2Service ]
+
+#          !If
+#            - GPU
+#            - Memory: 30720
+#            - Memory: 2048
+#          !If
+#            - GPU
+#            - Cpu: 4096
+#            - Cpu: 256
+#          !If
+#            - GPU
+#            - MemoryReservation: 30720
+#            - MemoryReservation: 2048
+#      !If
+#      - GPU
+#      - Memory: 30720
+#      - Memory: 2048
+#      !If
+#        - GPU
+#        - Cpu: 4096
+#        - Cpu: 256
