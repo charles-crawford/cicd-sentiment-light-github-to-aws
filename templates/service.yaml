@@ -107,17 +107,17 @@ Resources:
       Family: !Sub ${AWS::StackName}-${GitHubRepo}
       RequiresCompatibilities:
         - !If [ Fargate, "FARGATE", "EC2" ]
-      Memory: 30720 #2048 #
-      Cpu: 4096 #256 #
+      Memory: 30720
+      Cpu: 4096
       NetworkMode: !If [ Fargate, "awsvpc", "bridge" ]
       ExecutionRoleArn: !Ref TaskExecutionRole
       ContainerDefinitions:
         - Name: !Ref GitHubRepo
           Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${GitHubRepo}:${ImageTag}
           Essential: true
-          Cpu: 4096 #256 #
-          Memory: 30720 #2048 #
-          MemoryReservation: 30720 #2048 #
+          Cpu: 4096
+          Memory: 30720
+          MemoryReservation: 30720
           PortMappings:
             - ContainerPort: !Ref ContainerPort
               HostPort: !If [ Fargate, !Ref ContainerPort, !Ref HostPort ]
