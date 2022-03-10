@@ -6,7 +6,17 @@ ECS deployment. The CloudFormation templates are based on this
 make it easier to modify the repo to other apps. I've also added some details of the changes I had to make from 
 the tutorial repo above to get the app deployed. 
 
-### Note: Currently working to include GPU deployment capabilities
+
+### <span style="color:red">***WARNING***</span>
+<span style="color:red; font-weight: bold">
+This template is set up by default to deploy a p2.xlarge GPU instance for the service. The cost is 
+$0.90 per hour for these instances on top of the other resources. So please be aware of cleaning up your stack once you are done.
+</span>
+
+<span style="color:red; font-weight: bold">*** Simply select the t2.large instance to launch using a CPU service.***</span>
+
+### Note: EC2 deployment works with both GPU and CPU deployments.
+### TODO: Get Fargate working with GPU deployments
 
 ### Sections
 1. First Things First

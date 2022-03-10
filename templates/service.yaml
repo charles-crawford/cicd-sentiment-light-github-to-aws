@@ -16,6 +16,13 @@ Parameters:
       - Fargate
       - EC2
 
+  InstanceType:
+    Type: String
+    Default: p2.xlarge
+    AllowedValues:
+      - p2.xlarge
+      - t2.large
+
   TargetGroup:
     Type: String
 
@@ -39,8 +46,8 @@ Parameters:
 
 Conditions:
   Fargate: !Equals [ !Ref LaunchType, "Fargate" ]
-
   EC2: !Equals [ !Ref LaunchType, "EC2" ]
+  GPU: !Equals [ !Ref InstanceType, "p2.xlarge" ]
 
 Resources:
   TaskExecutionRole:
@@ -100,20 +107,26 @@ Resources:
       Family: !Sub ${AWS::StackName}-${GitHubRepo}
       RequiresCompatibilities:
         - !If [ Fargate, "FARGATE", "EC2" ]
-      Memory: 2048
-      Cpu: 256
+      Cpu: !If [ GPU, 4096, 256 ]
+      Memory: !If [ GPU, 30720, 2048 ]
       NetworkMode: !If [ Fargate, "awsvpc", "bridge" ]
       ExecutionRoleArn: !Ref TaskExecutionRole
       ContainerDefinitions:
         - Name: !Ref GitHubRepo
           Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${GitHubRepo}:${ImageTag}
           Essential: true
-          Cpu: 256
-          Memory: 2048
-          MemoryReservation: 1024
+          Cpu: !If [ GPU, 4096, 256 ]
+          Memory: !If [ GPU, 30720, 2048 ]
+          MemoryReservation: !If [ GPU, 30720, 2048 ]
           PortMappings:
             - ContainerPort: !Ref ContainerPort
               HostPort: !If [ Fargate, !Ref ContainerPort, !Ref HostPort ]
+          ResourceRequirements:
+            !If
+              - GPU
+              - - Type: GPU
+                  Value: 1
+              - - !Ref AWS::NoValue
           LogConfiguration:
             LogDriver: awslogs
             Options:
