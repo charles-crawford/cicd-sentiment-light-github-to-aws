@@ -15,7 +15,7 @@ $0.90 per hour for these instances on top of the other resources. So please be a
 
 <span style="color:red; font-weight: bold">*** Simply select the t2.large instance to launch using a CPU service.***</span>
 
-### Note: EC2 deployment works with both GPU and CPU deployments. Fargate does not support GPU deployments.
+### Note: Fargate does not support GPU deployments.
 
 ### Sections
 1. First Things First
