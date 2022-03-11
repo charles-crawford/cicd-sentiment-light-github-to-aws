@@ -10,13 +10,6 @@ Parameters:
       - Fargate
       - EC2
 
-  AmiMapping:
-    Type: String
-    Default: AWSRegionToAMIGPU
-    AllowedValues:
-      - AWSRegionToAMIGPU
-      - AWSRegionToAMI
-
   InstanceType:
     Type: String
     Default: p2.xlarge
