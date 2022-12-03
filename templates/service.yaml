@@ -18,10 +18,10 @@ Parameters:
 
   InstanceType:
     Type: String
-    Default: p3.2xlarge
+    Default: t2.large
     AllowedValues:
-      - p3.2xlarge
       - t2.large
+      - p3.2xlarge
 
   TargetGroup:
     Type: String
