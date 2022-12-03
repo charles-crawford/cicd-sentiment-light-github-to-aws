@@ -18,9 +18,9 @@ Parameters:
 
   InstanceType:
     Type: String
-    Default: p2.xlarge
+    Default: p3.2xlarge
     AllowedValues:
-      - p2.xlarge
+      - p3.2xlarge
       - t2.large
 
   TargetGroup:
@@ -47,7 +47,7 @@ Parameters:
 Conditions:
   Fargate: !Equals [ !Ref LaunchType, "Fargate" ]
   EC2: !Equals [ !Ref LaunchType, "EC2" ]
-  GPU: !Equals [ !Ref InstanceType, "p2.xlarge" ]
+  GPU: !Equals [ !Ref InstanceType, "p3.2xlarge" ]
 
 Resources:
   TaskExecutionRole:
